@@ -6,6 +6,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { AuthProvider } from "./contexts/AuthContext";
 import { CustomCursor } from "./components/CustomCursor";
+
 import { PageTransition } from "./components/PageTransition";
 
 // Pages
