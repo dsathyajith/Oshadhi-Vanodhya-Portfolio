@@ -239,55 +239,35 @@ export function Navbar() {
               <ul className="flex flex-col gap-6 list-none m-0 p-0">
                 {navLinks.map((link) => (
                   <li key={link.name}>
-                    {link.href.startsWith("/#") ? (
-                      <a
-                        href={
-                          link.name === "Work"
-                            ? "/work"
-                            : link.name === "Testimonials"
-                              ? "/#kind-words"
-                              : link.href
-                        }
-                        className="text-2xl font-serif italic text-slate-300 hover:text-violet-400 block py-2 border-b border-white/5"
-                        onClick={(e) => {
-                          setIsOpen(false);
-                          const targetHref =
-                            link.name === "Work"
-                              ? "/work"
-                              : link.name === "Testimonials"
-                                ? "/#kind-words"
-                                : link.href;
-
-                          if (
-                            targetHref.startsWith("/#") &&
-                            window.location.pathname === "/"
-                          ) {
+                    <Link
+                      to={link.href.startsWith("/#") ? "/" : link.href}
+                      className="text-2xl font-serif italic text-slate-300 hover:text-violet-400 block py-2 border-b border-white/5"
+                      onClick={(e) => {
+                        setIsOpen(false);
+                        if (link.href.startsWith("/#")) {
+                          const elementId = link.href.replace("/#", "");
+                          const scrollToElement = () => {
+                            const element = document.getElementById(elementId);
+                            if (element) {
+                              element.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start",
+                              });
+                            }
+                          };
+                          if (window.location.pathname !== "/") {
+                            // Navigate to home first, then scroll after render
+                            setTimeout(scrollToElement, 400);
+                          } else {
                             e.preventDefault();
-                            const elementId = targetHref.replace("/#", "");
-                            setTimeout(() => {
-                              const element =
-                                document.getElementById(elementId);
-                              if (element) {
-                                element.scrollIntoView({
-                                  behavior: "smooth",
-                                  block: "start",
-                                });
-                              }
-                            }, 300);
+                            // Menu close animation needs a moment before scroll
+                            setTimeout(scrollToElement, 350);
                           }
-                        }}
-                      >
-                        {link.name}
-                      </a>
-                    ) : (
-                      <Link
-                        to={link.href}
-                        className="text-2xl font-serif italic text-slate-300 hover:text-violet-400 block py-2 border-b border-white/5"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {link.name}
-                      </Link>
-                    )}
+                        }
+                      }}
+                    >
+                      {link.name}
+                    </Link>
                   </li>
                 ))}
               </ul>

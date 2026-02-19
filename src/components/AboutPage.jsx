@@ -230,12 +230,13 @@ export function AboutPage() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-teal-500/10 blur-[60px] rounded-full opacity-50 pointer-events-none" />
 
               {/* Responsive sizing: smaller on mobile, larger on desktop */}
-              <div className="relative w-48 sm:w-56 md:w-64 lg:w-80 aspect-[3/4]">
+              {/* Extra padding-right/bottom on mobile so the offset border isn't clipped */}
+              <div className="relative w-48 sm:w-56 md:w-64 lg:w-80 aspect-[3/4] pr-2 pb-2 sm:pr-3 sm:pb-3 lg:pr-0 lg:pb-0">
                 {/* Decorative Offset Border */}
                 <div className="absolute inset-0 border border-teal-500/20 rounded-full translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 transition-transform duration-500 group-hover:translate-x-4 group-hover:translate-y-4" />
 
                 {/* Main Image Container - Pill Shape */}
-                <div className="absolute inset-0 rounded-full overflow-hidden border border-white/10 bg-slate-800 shadow-2xl relative z-10 transition-transform duration-500 group-hover:-translate-y-1">
+                <div className="absolute top-0 left-0 right-2 bottom-2 sm:right-3 sm:bottom-3 lg:inset-0 rounded-full overflow-hidden border border-white/10 bg-slate-800 shadow-2xl z-10 transition-transform duration-500 group-hover:-translate-y-1">
                   <motion.img
                     src={profileImage}
                     alt="Oshadhi Vanodhya"
