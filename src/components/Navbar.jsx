@@ -240,30 +240,19 @@ export function Navbar() {
                 {navLinks.map((link) => (
                   <li key={link.name}>
                     {link.href.startsWith("/#") ? (
-                      <a
-                        href={
-                          link.name === "Work"
-                            ? "/work"
-                            : link.name === "Testimonials"
-                              ? "/#kind-words"
-                              : link.href
-                        }
+                      <Link
+                        to={link.href} // Always use the original href
                         className="text-2xl font-serif italic text-slate-300 hover:text-violet-400 block py-2 border-b border-white/5"
                         onClick={(e) => {
                           setIsOpen(false);
-                          const targetHref =
-                            link.name === "Work"
-                              ? "/work"
-                              : link.name === "Testimonials"
-                                ? "/#kind-words"
-                                : link.href;
 
+                          // If it's a hash link and we're on the home page, handle scroll
                           if (
-                            targetHref.startsWith("/#") &&
+                            link.href.startsWith("/#") &&
                             window.location.pathname === "/"
                           ) {
                             e.preventDefault();
-                            const elementId = targetHref.replace("/#", "");
+                            const elementId = link.href.replace("/#", "");
                             setTimeout(() => {
                               const element =
                                 document.getElementById(elementId);
@@ -275,10 +264,11 @@ export function Navbar() {
                               }
                             }, 300);
                           }
+                          // Otherwise let the Link component handle navigation normally
                         }}
                       >
                         {link.name}
-                      </a>
+                      </Link>
                     ) : (
                       <Link
                         to={link.href}
