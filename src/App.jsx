@@ -58,9 +58,56 @@ export default function App() {
             <Routes>
               {/* Main Pages */}
               <Route path="/" element={<Home />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/journal" element={<SpeakingJournalPage />} />
+              <Route path="/resources" element={<ResourcesPage />} />
+              <Route path="/resume" element={<DownloadResume />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/work" element={<WorkPage />} />
+              <Route path="/access-logs" element={<AccessLogsPage />} />
+
+              {/* Case Studies */}
+              <Route path="/work/ifs-ai" element={<IfsAiCaseStudy />} />
+              <Route
+                path="/work/ifs-sustainability"
+                element={<IfsSustainabilityCaseStudy />}
+              />
+              <Route path="/work/bleep-med" element={<BleepMedCaseStudy />} />
+              <Route
+                path="/work/expert-republic"
+                element={<ExpertRepublicCaseStudy />}
+              />
+              <Route
+                path="/work/expert-republic-guest-overview"
+                element={<ExpertRepublicGuestOverview />}
+              />
+              <Route
+                path="/work/swedish-fitness-guest-overview"
+                element={<SwedishFitnessGuestOverview />}
+              />
+              <Route
+                path="/work/ifs-sustainability-guest-overview"
+                element={<IfsSustainabilityGuestOverview />}
+              />
+              <Route
+                path="/work/ifs-ai-guest-overview"
+                element={<IfsAiGuestOverview />}
+              />
+              <Route path="/work/auto-ml" element={<AutoMlCaseStudy />} />
+              <Route
+                path="/work/leadership"
+                element={<LeadershipCaseStudy />}
+              />
+              <Route
+                path="/work/ai-ways-of-working"
+                element={<AiWaysOfWorkingCaseStudy />}
+              />
+              <Route
+                path="/work/brp-systems"
+                element={<BrpSystemsCaseStudy />}
+              />
             </Routes>
           </PageTransition>
-          <Footer />
         </div>
       </div>
     </AuthProvider>
