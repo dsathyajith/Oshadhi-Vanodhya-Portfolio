@@ -43,7 +43,7 @@ export function Navbar() {
     { name: "Work", href: "/work" },
     { name: "Speaking & Journal", href: "/journal" },
     { name: "About", href: "/about" },
-    { name: "Testimonials", href: "#kind-words" },
+    { name: "Testimonials", href: "/#kind-words" },
     { name: "Resources", href: "/resources" },
   ];
 
@@ -239,53 +239,46 @@ export function Navbar() {
               <ul className="flex flex-col gap-6 list-none m-0 p-0">
                 {navLinks.map((link) => (
                   <li key={link.name}>
-                    {link.name === "Testimonials" ? (
-                      // Special handling for Testimonials which is a hash link on home page
-                      <Link
-                        to="/#kind-words"
+                    {link.href.startsWith("/#") ? (
+                      <a
+                        href={
+                          link.name === "Work"
+                            ? "/work"
+                            : link.name === "Testimonials"
+                              ? "/#kind-words"
+                              : link.href
+                        }
                         className="text-2xl font-serif italic text-slate-300 hover:text-violet-400 block py-2 border-b border-white/5"
                         onClick={(e) => {
                           setIsOpen(false);
+                          const targetHref =
+                            link.name === "Work"
+                              ? "/work"
+                              : link.name === "Testimonials"
+                                ? "/#kind-words"
+                                : link.href;
 
-                          // If we're already on home page, handle scroll manually
-                          if (window.location.pathname === "/") {
+                          if (
+                            targetHref.startsWith("/#") &&
+                            window.location.pathname === "/"
+                          ) {
                             e.preventDefault();
-                            const element =
-                              document.getElementById("kind-words");
-                            if (element) {
-                              element.scrollIntoView({
-                                behavior: "smooth",
-                                block: "start",
-                              });
-                            }
-                          }
-                          // Otherwise let Link navigate to /#kind-words
-                        }}
-                      >
-                        {link.name}
-                      </Link>
-                    ) : link.href.startsWith("/#") ? (
-                      <Link
-                        to={link.href}
-                        className="text-2xl font-serif italic text-slate-300 hover:text-violet-400 block py-2 border-b border-white/5"
-                        onClick={(e) => {
-                          setIsOpen(false);
-
-                          if (window.location.pathname === "/") {
-                            e.preventDefault();
-                            const elementId = link.href.replace("/#", "");
-                            const element = document.getElementById(elementId);
-                            if (element) {
-                              element.scrollIntoView({
-                                behavior: "smooth",
-                                block: "start",
-                              });
-                            }
+                            const elementId = targetHref.replace("/#", "");
+                            setTimeout(() => {
+                              const element =
+                                document.getElementById(elementId);
+                              if (element) {
+                                element.scrollIntoView({
+                                  behavior: "smooth",
+                                  block: "start",
+                                });
+                              }
+                            }, 300);
                           }
                         }}
                       >
                         {link.name}
-                      </Link>
+                      </a>
                     ) : (
                       <Link
                         to={link.href}

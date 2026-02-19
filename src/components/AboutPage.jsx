@@ -220,41 +220,51 @@ export function AboutPage() {
           </motion.div>
 
           <motion.div
-            className="lg:col-span-5 order-1 lg:order-2 flex justify-center items-center w-full"
+            className="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end items-center"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="relative group perspective-1000 w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[400px] mx-auto">
+            <div className="relative group perspective-1000">
               {/* Decorative background glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-teal-500/10 blur-[60px] rounded-full opacity-50 pointer-events-none" />
 
-              {/* Container with responsive sizing */}
-              <div className="relative w-full aspect-[3/4]">
-                {/* Decorative Offset Border - hidden on very small screens */}
-                <div className="absolute inset-0 border-2 border-teal-500/20 rounded-[40%] translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 transition-transform duration-500 group-hover:translate-x-4 group-hover:translate-y-4 hidden xs:block" />
+              {/* Responsive sizing: smaller on mobile, larger on desktop */}
+              <div className="relative w-48 sm:w-56 md:w-64 lg:w-80 aspect-[3/4]">
+                {/* Decorative Offset Border */}
+                <div className="absolute inset-0 border border-teal-500/20 rounded-full translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 transition-transform duration-500 group-hover:translate-x-4 group-hover:translate-y-4" />
 
-                {/* Main Image Container - Pill/Rounded Shape */}
-                <div className="absolute inset-0 rounded-[40%] overflow-hidden border-2 border-white/10 bg-slate-800 shadow-2xl relative z-10 transition-transform duration-500 group-hover:-translate-y-1">
-                  <img
+                {/* Main Image Container - Pill Shape */}
+                <div className="absolute inset-0 rounded-full overflow-hidden border border-white/10 bg-slate-800 shadow-2xl relative z-10 transition-transform duration-500 group-hover:-translate-y-1">
+                  <motion.img
                     src={profileImage}
                     alt="Oshadhi Vanodhya"
-                    className="w-full h-full object-cover object-center scale-105 transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    animate={{
+                      filter: [
+                        "brightness(1) saturate(1)",
+                        "brightness(1.2) saturate(1.3)",
+                        "brightness(1) saturate(1)",
+                      ],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   />
-
-                  {/* Animated overlay */}
                   <motion.div
                     className="absolute inset-0 bg-teal-500/30 mix-blend-soft-light z-10"
-                    animate={{ opacity: [0, 0.5, 0] }}
+                    animate={{ opacity: [0, 1, 0] }}
                     transition={{
-                      duration: 4,
+                      duration: 3,
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
                   />
 
                   {/* Inner Gradient Overlay */}
-                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[40%] bg-gradient-to-t from-slate-900/40 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-full bg-gradient-to-t from-slate-900/30 to-transparent pointer-events-none" />
                 </div>
               </div>
             </div>
