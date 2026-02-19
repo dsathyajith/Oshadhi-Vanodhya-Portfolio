@@ -1,12 +1,26 @@
 import { Menu, X, Download } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { motion, AnimatePresence } from "motion/react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleHashNavigation = (elementId, closeMobile = false) => {
+    if (closeMobile) setIsOpen(false);
+    if (location.pathname === "/") {
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      navigate(`/?scrollTo=${elementId}`);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,88 +93,20 @@ export function Navbar() {
               <ul className="flex items-center gap-6 list-none m-0 p-0">
                 {navLinks.map((link) => (
                   <li key={link.name}>
-                    {link.href.startsWith("/#") &&
-                    link.name !== "Speaking & Journal" ? (
-                      <Link
-                        to={link.name === "Work" ? "/work" : link.href}
+                    {link.href.startsWith("/#") ? (
+                      <button
                         className="text-sm font-medium text-slate-300 hover:text-violet-400 transition-colors relative group inline-block py-3 px-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 rounded-sm"
-                        onClick={(e) => {
-                          if (link.name === "Work") return;
-
-                          const elementId = link.href.replace("/#", "");
-
-                          // If we're not on the home page, navigate there first
-                          if (window.location.pathname !== "/") {
-                            // Let the Link component handle navigation to home
-                            setTimeout(() => {
-                              const element =
-                                document.getElementById(elementId);
-                              if (element) {
-                                element.scrollIntoView({
-                                  behavior: "smooth",
-                                  block: "start",
-                                });
-                              }
-                            }, 300);
-                          } else {
-                            // Already on home page, just scroll
-                            e.preventDefault();
-                            const element = document.getElementById(elementId);
-                            if (element) {
-                              element.scrollIntoView({
-                                behavior: "smooth",
-                                block: "start",
-                              });
-                            }
-                          }
-                        }}
+                        onClick={() =>
+                          handleHashNavigation(link.href.replace("/#", ""))
+                        }
                       >
                         {link.name}
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-violet-500 transition-all duration-300 group-hover:w-full"></span>
-                      </Link>
+                      </button>
                     ) : (
                       <Link
-                        to={
-                          link.name === "Speaking & Journal"
-                            ? "/journal"
-                            : link.href
-                        }
+                        to={link.href}
                         className="text-sm font-medium text-slate-300 hover:text-violet-400 transition-colors relative group inline-block py-3 px-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 rounded-sm"
-                        onClick={(e) => {
-                          if (link.name === "Speaking & Journal") return;
-
-                          // Only apply hash link logic if this is actually a hash link
-                          if (link.href.startsWith("/#")) {
-                            const elementId = link.href.replace("/#", "");
-
-                            // If we're not on the home page, navigate there first
-                            if (window.location.pathname !== "/") {
-                              // Let the Link component handle navigation to home
-                              setTimeout(() => {
-                                const element =
-                                  document.getElementById(elementId);
-                                if (element) {
-                                  element.scrollIntoView({
-                                    behavior: "smooth",
-                                    block: "start",
-                                  });
-                                }
-                              }, 300);
-                            } else {
-                              // Already on home page, just scroll
-                              e.preventDefault();
-                              const element =
-                                document.getElementById(elementId);
-                              if (element) {
-                                element.scrollIntoView({
-                                  behavior: "smooth",
-                                  block: "start",
-                                });
-                              }
-                            }
-                          }
-                          // For regular routes like /about and /resources, let Link handle navigation normally
-                        }}
                       >
                         {link.name}
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-violet-500 transition-all duration-300 group-hover:w-full"></span>
@@ -239,35 +185,27 @@ export function Navbar() {
               <ul className="flex flex-col gap-6 list-none m-0 p-0">
                 {navLinks.map((link) => (
                   <li key={link.name}>
-                    <Link
-                      to={link.href.startsWith("/#") ? "/" : link.href}
-                      className="text-2xl font-serif italic text-slate-300 hover:text-violet-400 block py-2 border-b border-white/5"
-                      onClick={(e) => {
-                        setIsOpen(false);
-                        if (link.href.startsWith("/#")) {
-                          const elementId = link.href.replace("/#", "");
-                          const scrollToElement = () => {
-                            const element = document.getElementById(elementId);
-                            if (element) {
-                              element.scrollIntoView({
-                                behavior: "smooth",
-                                block: "start",
-                              });
-                            }
-                          };
-                          if (window.location.pathname !== "/") {
-                            // Navigate to home first, then scroll after render
-                            setTimeout(scrollToElement, 400);
-                          } else {
-                            e.preventDefault();
-                            // Menu close animation needs a moment before scroll
-                            setTimeout(scrollToElement, 350);
-                          }
+                    {link.href.startsWith("/#") ? (
+                      <button
+                        className="text-2xl font-serif italic text-slate-300 hover:text-violet-400 block py-2 border-b border-white/5 w-full text-left"
+                        onClick={() =>
+                          handleHashNavigation(
+                            link.href.replace("/#", ""),
+                            true,
+                          )
                         }
-                      }}
-                    >
-                      {link.name}
-                    </Link>
+                      >
+                        {link.name}
+                      </button>
+                    ) : (
+                      <Link
+                        to={link.href}
+                        className="text-2xl font-serif italic text-slate-300 hover:text-violet-400 block py-2 border-b border-white/5"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {link.name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
