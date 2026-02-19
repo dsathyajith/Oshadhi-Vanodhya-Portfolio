@@ -96,11 +96,8 @@ export const Footer = memo(() => {
               thoughtful, human-centered design.
             </p>
 
-            <a
-              href="mailto:oshadhi.ux@gmail.com"
-              className="inline-flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-700 text-white px-6 h-11 shadow-[0_0_20px_-5px_rgba(124,58,237,0.5)] transition-colors"
-            >
-              <Mail className="h-4 w-4" />
+            <a href="mailto:oshadhi.ux@gmail.com">
+              <Mail className="mr-2 h-4 w-4" />
               oshadhi.ux@gmail.com
             </a>
           </div>
